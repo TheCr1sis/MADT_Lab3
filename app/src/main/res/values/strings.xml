@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">MADT_3_Lab</string>
+    <string name="back">C</string>
+    <string name="clear">CE</string>
+    <string name="sign">+/-</string>
+    <string name="divide">/</string>
+    <string name="multiply">*</string>
+    <string name="subtract">-</string>
+    <string name="add">+</string>
+    <string name="decimal">.</string>
+    <string name="equals">=</string>
+    <string name="square_root">√</string>
+</resources>
