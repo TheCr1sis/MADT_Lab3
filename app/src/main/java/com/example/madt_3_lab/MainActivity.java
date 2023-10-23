@@ -116,14 +116,20 @@ public class MainActivity extends AppCompatActivity {
 
     public void onUndoClick(View view) {
         if (!historyStack.isEmpty()) {
-            currentInput = historyStack.pop();
+            String lastExpression = historyStack.pop();
 
-            String[] parts = currentInput.split(" ");
-            if (parts.length == 3) {
-                firstOperand = Double.parseDouble(parts[0]);
-                operator = parts[1];
+            if (lastExpression.endsWith(" sqrt")) {
+                currentInput = lastExpression.substring(0, lastExpression.length() - 5);
             } else {
-                operator = "";
+                currentInput = lastExpression;
+
+                String[] parts = lastExpression.split(" ");
+                if (parts.length == 3) {
+                    firstOperand = Double.parseDouble(parts[0]);
+                    operator = parts[1];
+                } else {
+                    operator = "";
+                }
             }
             updateScreen();
         }
@@ -143,12 +149,23 @@ public class MainActivity extends AppCompatActivity {
             double number = Double.parseDouble(currentInput);
             if (number >= 0) {
                 number = Math.sqrt(number);
-                currentInput = String.valueOf(number);
+                historyStack.push(currentInput);
+                currentInput = number + " sqrt";
                 updateScreen();
             } else {
                 currentInput = "Error: Invalid input [negative input for square root]";
                 updateScreen();
             }
+        }
+    }
+
+    public void onDecimalClick(View view) {
+        String[] parts = currentInput.split(" ");
+        String lastPart = parts[parts.length - 1];
+
+        if (!lastPart.contains(".")) {
+            currentInput += ".";
+            updateScreen();
         }
     }
 
