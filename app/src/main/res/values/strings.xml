@@ -7,7 +7,7 @@
     <string name="multiply">*</string>
     <string name="subtract">-</string>
     <string name="add">+</string>
-    <string name="decimal">.</string>
+    <string name="undo">←</string>
     <string name="equals">=</string>
     <string name="square_root">√</string>
 </resources>

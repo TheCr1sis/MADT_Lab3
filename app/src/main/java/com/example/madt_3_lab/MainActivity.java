@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import java.util.Stack;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     private String currentInput = "";
     private String operator = "";
     private double firstOperand = 0;
+    private Stack<String> historyStack = new Stack<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,19 +31,17 @@ public class MainActivity extends AppCompatActivity {
         updateScreen();
     }
 
-    public void onDecimalClick(View view) {
-        if (!currentInput.contains(".")) {
-            currentInput += ".";
-            updateScreen();
-        }
-    }
-
     public void onOperatorClick(View view) {
         Button button = (Button) view;
-        currentInput += " " + button.getText().toString() + " ";
+        String newOperator = button.getText().toString();
+        if (!currentInput.isEmpty() && !operator.isEmpty()) {
+            onEqualClick(view);
+        }
+        historyStack.push(currentInput);
+        currentInput = currentInput + " " + newOperator + " ";
+        operator = newOperator;
         updateScreen();
     }
-
 
     public void onEqualClick(View view) {
         double result = 0;
@@ -82,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
                             errorMessage = "Error: Invalid operator";
                     }
                 } catch (NumberFormatException e) {
-                    // Handle invalid operand (not a number) error
                     errorMessage = "Error: Invalid operand";
                 }
             }
@@ -109,6 +109,22 @@ public class MainActivity extends AppCompatActivity {
             updateScreen();
         }
     }
+
+    public void onUndoClick(View view) {
+        if (!historyStack.isEmpty()) {
+            currentInput = historyStack.pop();
+
+            String[] parts = currentInput.split(" ");
+            if (parts.length == 3) {
+                firstOperand = Double.parseDouble(parts[0]);
+                operator = parts[1];
+            } else {
+                operator = "";
+            }
+            updateScreen();
+        }
+    }
+
 
     public void onSignChangeClick(View view) {
         if (!currentInput.isEmpty()) {

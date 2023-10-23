@@ -180,20 +180,21 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/buttonUndo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/undo"
+            android:textSize="19sp"
+            android:onClick="onUndoClick"/>
+
+        <Button
             android:id="@+id/button0"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="0"
             android:onClick="onDigitClick"/>
-
-        <Button
-            android:id="@+id/buttonDecimal"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/decimal"
-            android:onClick="onDecimalClick"/>
 
         <Button
             android:id="@+id/buttonAdd"
