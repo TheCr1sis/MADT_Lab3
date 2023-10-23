@@ -34,13 +34,17 @@ public class MainActivity extends AppCompatActivity {
     public void onOperatorClick(View view) {
         Button button = (Button) view;
         String newOperator = button.getText().toString();
-        if (!currentInput.isEmpty() && !operator.isEmpty()) {
-            onEqualClick(view);
+
+        if (!currentInput.isEmpty()) {
+            if (currentInput.matches(".*[+\\-*/]$")) {
+                currentInput = currentInput.replaceAll("[+\\-*/]$", newOperator);
+            } else {
+                currentInput += " " + newOperator + " ";
+            }
+            operator = newOperator;
+            historyStack.push(currentInput);
+            updateScreen();
         }
-        historyStack.push(currentInput);
-        currentInput = currentInput + " " + newOperator + " ";
-        operator = newOperator;
-        updateScreen();
     }
 
     public void onEqualClick(View view) {
@@ -124,7 +128,6 @@ public class MainActivity extends AppCompatActivity {
             updateScreen();
         }
     }
-
 
     public void onSignChangeClick(View view) {
         if (!currentInput.isEmpty()) {
